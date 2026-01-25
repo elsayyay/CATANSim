@@ -149,9 +149,26 @@
         </ownedParameter>
       </ownedOperation>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_itz7YPmqEfCsvPR2Jy8V7w" name="ResourceCard"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_34JyMPmqEfCsvPR2Jy8V7w" name="Settlement"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_9PXugPmqEfCsvPR2Jy8V7w" name="City"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_itz7YPmqEfCsvPR2Jy8V7w" name="ResourceCard">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_DDpoAPmwEfCxEeELgLsV3Q" name="type" type="_Q0ZNUPmrEfCsvPR2Jy8V7w"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_Na2sYPmwEfCxEeELgLsV3Q" name="type">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_O3wIMPmwEfCxEeELgLsV3Q" name="" type="_Q0ZNUPmrEfCsvPR2Jy8V7w" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_34JyMPmqEfCsvPR2Jy8V7w" name="Settlement">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_bZ0XEPmvEfCxEeELgLsV3Q" name="victoryPoints">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_fKOGkPmvEfCxEeELgLsV3Q" name="" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_9PXugPmqEfCsvPR2Jy8V7w" name="City">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_w7JKgPmvEfCxEeELgLsV3Q" name="victoryPoints">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_zFe7IPmvEfCxEeELgLsV3Q" name="" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
     <packagedElement xmi:type="uml:Enumeration" xmi:id="_Q0ZNUPmrEfCsvPR2Jy8V7w" name="ResourceType">
       <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_ToqEsPmrEfCsvPR2Jy8V7w" name="BRICK"/>
       <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_0vzrwPmrEfCsvPR2Jy8V7w" name="LUMBER"/>
@@ -190,7 +207,15 @@
       </ownedOperation>
       <nestedClassifier xmi:type="uml:PrimitiveType" xmi:id="_THmwoPmsEfCsvPR2Jy8V7w" name="PrimitiveType1"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_4arlkPmsEfCsvPR2Jy8V7w" name="Building"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_4arlkPmsEfCsvPR2Jy8V7w" name="Building">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_1gJRoPmtEfCxEeELgLsV3Q" name="owner" visibility="private" type="_kKSDwPmGEfCF9ffxIWxK-g"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Z9f_gPmuEfCxEeELgLsV3Q" name="Location" visibility="private" type="_kMAmcPmkEfCDu7IOmtKl8w"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_mhqDoPmuEfCxEeELgLsV3Q" name="victoryPoints">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_zuFosPmuEfCxEeELgLsV3Q" name="" direction="return">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedParameter>
+      </ownedOperation>
+    </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_OH_qkPmBEfCF9ffxIWxK-g">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_OIFxMPmBEfCF9ffxIWxK-g" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/Codegen/1#/"/>
