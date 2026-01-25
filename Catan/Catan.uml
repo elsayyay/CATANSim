@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_KLn_0Pl6EfCF9ffxIWxK-g" name="Catan">
-  <packageImport xmi:type="uml:PackageImport" xmi:id="_Ka-DYPl6EfCF9ffxIWxK-g">
-    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
-  </packageImport>
-</uml:Model>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Codegen="http://www.eclipse.org/papyrus/Codegen/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:Model xmi:id="_KLn_0Pl6EfCF9ffxIWxK-g" name="Catan" visibility="protected">
+    <packageImport xmi:type="uml:PackageImport" xmi:id="_Ka-DYPl6EfCF9ffxIWxK-g">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Class" xmi:id="_de7GYPmDEfCF9ffxIWxK-g" name="Game">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_gROO4PmDEfCF9ffxIWxK-g" name="round">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_iPf5cPmDEfCF9ffxIWxK-g" name="maxRounds">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_BagSAPmGEfCF9ffxIWxK-g" name="Board"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_kKSDwPmGEfCF9ffxIWxK-g" name="Player">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_1Af9gPmHEfCF9ffxIWxK-g" name="id">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_2dKv0PmHEfCF9ffxIWxK-g" name="victoryPoints">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_yLKkkPmGEfCF9ffxIWxK-g" name="" memberEnd="_yLMZwPmGEfCF9ffxIWxK-g _yLMZwfmGEfCF9ffxIWxK-g">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_yLLysPmGEfCF9ffxIWxK-g" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yLLysfmGEfCF9ffxIWxK-g" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_yLMZwPmGEfCF9ffxIWxK-g" name="game" type="_de7GYPmDEfCF9ffxIWxK-g" association="_yLKkkPmGEfCF9ffxIWxK-g"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_yLMZwfmGEfCF9ffxIWxK-g" name="player" type="_kKSDwPmGEfCF9ffxIWxK-g" aggregation="composite" association="_yLKkkPmGEfCF9ffxIWxK-g">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8S1YIPmGEfCF9ffxIWxK-g" name="LiteralInteger1" value="4"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8S1_MPmGEfCF9ffxIWxK-g" name="LiteralUnlimitedNatural1" value="4"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_jdTzkPmHEfCF9ffxIWxK-g" memberEnd="_jdTzk_mHEfCF9ffxIWxK-g _jdUaoPmHEfCF9ffxIWxK-g">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_jdTzkfmHEfCF9ffxIWxK-g" source="org.eclipse.papyrus">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jdTzkvmHEfCF9ffxIWxK-g" key="nature" value="UML_Nature"/>
+      </eAnnotations>
+      <name xsi:nil="true"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_jdTzk_mHEfCF9ffxIWxK-g" name="game" type="_de7GYPmDEfCF9ffxIWxK-g" association="_jdTzkPmHEfCF9ffxIWxK-g"/>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_jdUaoPmHEfCF9ffxIWxK-g" name="board" type="_BagSAPmGEfCF9ffxIWxK-g" aggregation="composite" association="_jdTzkPmHEfCF9ffxIWxK-g"/>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_OH_qkPmBEfCF9ffxIWxK-g">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_OIFxMPmBEfCF9ffxIWxK-g" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/Codegen/1#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://Codegen_PROFILES/Codegen.profile.uml#_fPDsIBa-EearhdjjJ6cVzQ"/>
+    </profileApplication>
+  </uml:Model>
+  <Codegen:GeneratorHint xmi:id="_OIeywPmBEfCF9ffxIWxK-g" base_Element="_KLn_0Pl6EfCF9ffxIWxK-g" generatorID="Standard Java">
+    <language xmi:type="Codegen:Language" href="pathmap://Codegen_PROFILES/languages.uml#_2Zt6YCjREeayco6FJ_OtTQ"/>
+  </Codegen:GeneratorHint>
+</xmi:XMI>
