@@ -39,6 +39,12 @@
       <ownedEnd xmi:type="uml:Property" xmi:id="_jdTzk_mHEfCF9ffxIWxK-g" name="game" type="_de7GYPmDEfCF9ffxIWxK-g" association="_jdTzkPmHEfCF9ffxIWxK-g"/>
       <ownedEnd xmi:type="uml:Property" xmi:id="_jdUaoPmHEfCF9ffxIWxK-g" name="board" type="_BagSAPmGEfCF9ffxIWxK-g" aggregation="composite" association="_jdTzkPmHEfCF9ffxIWxK-g"/>
     </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_sewLoPmXEfCDu7IOmtKl8w" name="Test A">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_CdxAoPmYEfCDu7IOmtKl8w" name="getTest">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_RN07oPmYEfCDu7IOmtKl8w" name="Operation1"/>
+    </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_OH_qkPmBEfCF9ffxIWxK-g">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_OIFxMPmBEfCF9ffxIWxK-g" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/papyrus/Codegen/1#/"/>
