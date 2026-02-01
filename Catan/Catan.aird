@@ -41,7 +41,7 @@
     </ownedViews>
     <ownedViews xmi:type="viewpoint:DView" uid="_KQgf0Pl6EfCF9ffxIWxK-g">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.clazz/description/papyrus_class.odesign#//@ownedViewpoints[name='ClassDiagram']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_KXkxIPl6EfCF9ffxIWxK-g" name="New Class Diagram" repPath="#_KWkrkPl6EfCF9ffxIWxK-g" changeId="1769487186164">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_KXkxIPl6EfCF9ffxIWxK-g" name="New Class Diagram" repPath="#_KWkrkPl6EfCF9ffxIWxK-g" changeId="1769918298262">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.clazz/description/papyrus_class.odesign#//@ownedViewpoints[name='ClassDiagram']/@ownedRepresentations[name='ClassDiagram']"/>
         <target xmi:type="uml:Model" href="Catan.uml#_KLn_0Pl6EfCF9ffxIWxK-g"/>
       </ownedRepresentationDescriptors>
@@ -1224,6 +1224,18 @@
             <labelColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
           </endLabelStyleDescription>
         </computedStyleDescriptions>
+        <computedStyleDescriptions xmi:type="style:EdgeStyleDescription" xmi:id="_PfxIAP8iEfCWdZ-D4-NyEQ" sourceArrow="FillDiamond" targetArrow="NoDecoration">
+          <strokeColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          <beginLabelStyleDescription xmi:type="style:BeginLabelStyleDescription" xmi:id="_PfxIAf8iEfCWdZ-D4-NyEQ" labelSize="9" showIcon="false" labelExpression="aql:self.renderEdgeSourceLabel(view.sourceNode.oclAsType(viewpoint::DSemanticDecorator).target)">
+            <labelColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </beginLabelStyleDescription>
+          <centerLabelStyleDescription xmi:type="style:CenterLabelStyleDescription" xmi:id="_PfxIAv8iEfCWdZ-D4-NyEQ" labelSize="9" showIcon="false" labelExpression="aql:self.renderLabel(diagram)">
+            <labelColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </centerLabelStyleDescription>
+          <endLabelStyleDescription xmi:type="style:EndLabelStyleDescription" xmi:id="_PfxIA_8iEfCWdZ-D4-NyEQ" labelSize="9" showIcon="false" labelExpression="aql:self.renderEdgeTargetLabel(view.targetNode.oclAsType(viewpoint::DSemanticDecorator).target)">
+            <labelColor xmi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </endLabelStyleDescription>
+        </computedStyleDescriptions>
       </data>
     </ownedAnnotationEntries>
     <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_dfDpQPmDEfCF9ffxIWxK-g" name="Game" tooltipText="Catan::Game" incomingEdges="_yLbqUPmGEfCF9ffxIWxK-g _jdbvYPmHEfCF9ffxIWxK-g" width="10" height="10" childrenPresentation="VerticalStack">
@@ -2365,10 +2377,10 @@
       <semanticElements xmi:type="ecore:EAnnotation" href="Catan.uml#_v-lGYPs1EfCrwJFf4LYWGw"/>
       <semanticElements xmi:type="uml:Property" href="Catan.uml#_v-lGY_s1EfCrwJFf4LYWGw"/>
       <semanticElements xmi:type="uml:Property" href="Catan.uml#_v-lGYvs1EfCrwJFf4LYWGw"/>
-      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_yaZBgPs1EfCrwJFf4LYWGw" description="_KAjsgPs0EfCrwJFf4LYWGw" sourceArrow="InputArrow" targetArrow="NoDecoration" strokeColor="0,0,0">
-        <beginLabelStyle xmi:type="diagram:BeginLabelStyle" uid="_yaZBgfs1EfCrwJFf4LYWGw" labelSize="9" showIcon="false"/>
-        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_yaZBg_s1EfCrwJFf4LYWGw" labelSize="9" showIcon="false"/>
-        <endLabelStyle xmi:type="diagram:EndLabelStyle" uid="_yaZBgvs1EfCrwJFf4LYWGw" labelSize="9" showIcon="false"/>
+      <ownedStyle xmi:type="diagram:EdgeStyle" uid="_PfxIBP8iEfCWdZ-D4-NyEQ" description="_PfxIAP8iEfCWdZ-D4-NyEQ" sourceArrow="FillDiamond" targetArrow="NoDecoration" strokeColor="0,0,0">
+        <beginLabelStyle xmi:type="diagram:BeginLabelStyle" uid="_PfxIBf8iEfCWdZ-D4-NyEQ" labelSize="9" showIcon="false"/>
+        <centerLabelStyle xmi:type="diagram:CenterLabelStyle" uid="_PfxIB_8iEfCWdZ-D4-NyEQ" labelSize="9" showIcon="false"/>
+        <endLabelStyle xmi:type="diagram:EndLabelStyle" uid="_PfxIBv8iEfCWdZ-D4-NyEQ" labelSize="9" showIcon="false"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.clazz/description/papyrus_class.odesign#//@ownedViewpoints[name='ClassDiagram']/@ownedRepresentations[name='ClassDiagram']/@defaultLayer/@edgeMappings[name='CD_Association']"/>
     </ownedDiagramElements>

@@ -188,7 +188,6 @@
       <ownedAttribute xmi:type="uml:Property" xmi:id="_YTdHQPmoEfCDu7IOmtKl8w" name="owner" visibility="private" type="_kKSDwPmGEfCF9ffxIWxK-g"/>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_cxZ5QPmoEfCDu7IOmtKl8w" name="a" visibility="private" type="_kMAmcPmkEfCDu7IOmtKl8w"/>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_deg24PmoEfCDu7IOmtKl8w" name="b" visibility="private" type="_kMAmcPmkEfCDu7IOmtKl8w"/>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_v-lGY_s1EfCrwJFf4LYWGw" name="" type="_kKSDwPmGEfCF9ffxIWxK-g" association="_v-j4QPs1EfCrwJFf4LYWGw"/>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_O4ojwvs2EfCrwJFf4LYWGw" name="" type="_kMAmcPmkEfCDu7IOmtKl8w" association="_O4n8sPs2EfCrwJFf4LYWGw"/>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_N1C_0Ps2EfCrwJFf4LYWGw" name="" type="_kMAmcPmkEfCDu7IOmtKl8w" association="_N1BxsPs2EfCrwJFf4LYWGw">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Zv4aIPs2EfCrwJFf4LYWGw" name="LiteralInteger1" value="1"/>
@@ -371,10 +370,11 @@
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_v-lGYPs1EfCrwJFf4LYWGw" source="org.eclipse.papyrus">
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_v-lGYfs1EfCrwJFf4LYWGw" key="nature" value="UML_Nature"/>
       </eAnnotations>
-      <ownedEnd xmi:type="uml:Property" xmi:id="_v-lGYvs1EfCrwJFf4LYWGw" name="" type="_mjcX4PmkEfCDu7IOmtKl8w" association="_v-j4QPs1EfCrwJFf4LYWGw">
+      <ownedEnd xmi:type="uml:Property" xmi:id="_v-lGYvs1EfCrwJFf4LYWGw" name="" type="_mjcX4PmkEfCDu7IOmtKl8w" aggregation="composite" association="_v-j4QPs1EfCrwJFf4LYWGw">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_zluMMPs1EfCrwJFf4LYWGw" name="LiteralInteger1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zluMMfs1EfCrwJFf4LYWGw" name="LiteralUnlimitedNatural1" value="*"/>
       </ownedEnd>
+      <ownedEnd xmi:type="uml:Property" xmi:id="_v-lGY_s1EfCrwJFf4LYWGw" name="" type="_kKSDwPmGEfCF9ffxIWxK-g" association="_v-j4QPs1EfCrwJFf4LYWGw"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="_N1BxsPs2EfCrwJFf4LYWGw" name="a" memberEnd="_N1CYwvs2EfCrwJFf4LYWGw _N1C_0Ps2EfCrwJFf4LYWGw">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_N1CYwPs2EfCrwJFf4LYWGw" source="org.eclipse.papyrus">
