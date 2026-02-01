@@ -4,15 +4,8 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
 public class Settlement extends Building {
-	/**
-	 * 
-	 * @return 
-	 */
 	public int victoryPoints() {
+		return 0;
 	}
 }

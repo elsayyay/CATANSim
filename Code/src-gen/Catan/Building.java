@@ -4,24 +4,11 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
 public class Building {
-	/**
-	 * 
-	 */
 	private Player owner;
-	/**
-	 * 
-	 */
-	private Node Location;
+	private Node location;
 
-	/**
-	 * 
-	 * @return 
-	 */
 	public int victoryPoints() {
+		return 0;
 	}
 }

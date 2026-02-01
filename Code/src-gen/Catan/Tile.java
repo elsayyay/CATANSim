@@ -4,40 +4,16 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
 public class Tile {
-	/**
-	 * 
-	 */
 	private int tileID;
-	/**
-	 * 
-	 */
 	private ResourceType resourceType;
-	/**
-	 * 
-	 */
 	private int numberToken;
 
-	/**
-	 * 
-	 */
-	public ResourceType ;
-	/**
-	 * 
-	 * @param roll 
-	 * @return 
-	 */
 	public boolean producesOn(int roll) {
+		return false;
 	}
 
-	/**
-	 * 
-	 * @return 
-	 */
 	public boolean isDesert() {
+		return false;
 	}
 }

@@ -4,24 +4,10 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
 public class ResourceCard {
-	/**
-	 * 
-	 */
 	public ResourceType type;
 
-	/**
-	 * 
-	 */
-	public ResourceType ;
-	/**
-	 * 
-	 * @return 
-	 */
 	public ResourceType type() {
+		return null;
 	}
 }

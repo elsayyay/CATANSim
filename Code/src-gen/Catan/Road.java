@@ -4,37 +4,12 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
 public class Road {
-	/**
-	 * 
-	 */
 	private Player owner;
-	/**
-	 * 
-	 */
 	private Node a;
-	/**
-	 * 
-	 */
 	private Node b;
 
-	/**
-	 * 
-	 */
-	public Node ;
-				/**
-				 * 
-				 */
-				public Node ;
-	/**
-	 * 
-	 * @param n 
-	 * @return 
-	 */
 	public boolean connects(Node n) {
+		return false;
 	}
 }

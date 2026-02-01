@@ -4,90 +4,41 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
-public class Board {
-	/**
-	 * 
-	 */
-	private Tile[] tile;
-	/**
-	 * 
-	 */
-	private Node[] node;
-	/**
-	 * 
-	 */
-	private Road[] road;
+import java.util.ArrayList;
+import java.util.List;
 
-	/**
-	 * 
-	 */
+public class Board {
+	private List<Tile> tiles = new ArrayList<>();
+	private List<Node> nodes = new ArrayList<>();
+	private List<Road> roads = new ArrayList<>();
+
 	public void setupDefaultMap() {
 	}
 
-	/**
-	 * 
-	 * @param roll 
-	 */
 	public void produceResources(int roll) {
 	}
 
-	/**
-	 * 
-	 * @param p 
-	 * @param a 
-	 * @param b 
-	 * @return 
-	 */
 	public boolean canPlaceRoad(Player p, Node a, Node b) {
+		return false;
 	}
 
-	/**
-	 * 
-	 * @param p 
-	 * @param a 
-	 * @param b 
-	 * @return 
-	 */
 	public boolean placeRoad(Player p, Node a, Node b) {
+		return false;
 	}
 
-	/**
-	 * 
-	 * @param p 
-	 * @param at 
-	 * @return 
-	 */
 	public boolean canPlaceSettlement(Player p, Node at) {
+		return false;
 	}
 
-	/**
-	 * 
-	 * @param p 
-	 * @param at 
-	 * @return 
-	 */
 	public boolean placeSettlement(Player p, Node at) {
+		return false;
 	}
 
-	/**
-	 * 
-	 * @param p 
-	 * @param at 
-	 * @return 
-	 */
 	public boolean canUpgradeToCity(Player p, Node at) {
+		return false;
 	}
 
-	/**
-	 * 
-	 * @param p 
-	 * @param at 
-	 * @return 
-	 */
 	public boolean upgradeToCity(Player p, Node at) {
+		return false;
 	}
 }

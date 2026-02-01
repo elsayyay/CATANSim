@@ -4,69 +4,30 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
-public class Player {
-	/**
-	 * 
-	 */
-	private int id;
-	/**
-	 * 
-	 */
-	private int victoryPoints;
-	/**
-	 * 
-	 */
-	private ResourceCard hand;
-	/**
-	 * 
-	 */
-	private Road roads;
-	/**
-	 * 
-	 */
-	private Settlement settlements;
-	/**
-	 * 
-	 */
-	private City cities;
+import java.util.ArrayList;
+import java.util.List;
 
-	/**
-	 * 
-	 * @param game 
-	 */
+public class Player {
+	private int id;
+	private int victoryPoints;
+	private List<ResourceCard> hand = new ArrayList<>();
+	private List<Road> roads = new ArrayList<>();
+	private List<Settlement> settlements = new ArrayList<>();
+	private List<City> cities = new ArrayList<>();
+
 	public void takeTurn(Game game) {
 	}
 
-	/**
-	 * 
-	 * @param type 
-	 * @param count 
-	 */
 	public void addResources(ResourceType type, int count) {
 	}
 
-	/**
-	 * 
-	 * @param cost 
-	 * @return 
-	 */
 	public boolean hasResources(Cost cost) {
+		return false;
 	}
 
-	/**
-	 * 
-	 * @param cost 
-	 */
 	public void Pay(Cost cost) {
 	}
 
-	/**
-	 * 
-	 */
 	public void updateVictoryPoints() {
 	}
 }

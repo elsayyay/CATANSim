@@ -4,58 +4,30 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
-public class Game {
-	/**
-	 * 
-	 */
-	private int round;
-	/**
-	 * 
-	 */
-	private int maxRounds;
-	/**
-	 * 
-	 */
-	private Board board;
-	/**
-	 * 
-	 */
-	public Player[] players;
+import java.util.ArrayList;
+import java.util.List;
 
-	/**
-	 * 
-	 * @return 
-	 */
+public class Game {
+	private int round;
+	private int maxRounds;
+	private Board board;
+	private List<Player> players = new ArrayList<>();
+
 	public int getRound() {
+		return 0;
 	}
 
-	/**
-	 * 
-	 */
 	public void playRound() {
 	}
 
-	/**
-	 * 
-	 */
 	public void run() {
 	}
 
-	/**
-	 * 
-	 * @return 
-	 */
 	public Player getWinner() {
+		return null;
 	}
 
-	/**
-	 * 
-	 * @return 
-	 */
 	public boolean isFinished() {
+		return false;
 	}
 }

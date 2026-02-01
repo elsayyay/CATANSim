@@ -4,54 +4,23 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
 public class Cost {
-	/**
-	 * 
-	 */
 	private int brick;
-	/**
-	 * 
-	 */
 	private int lumber;
-	/**
-	 * 
-	 */
 	private int wool;
-	/**
-	 * 
-	 */
 	private int grain;
-	/**
-	 * 
-	 */
 	private int ore;
-	/**
-	 * 
-	 */
 	private int desert;
 
-	/**
-	 * 
-	 * @return 
-	 */
 	public Cost road() {
+		return null;
 	}
 
-	/**
-	 * 
-	 * @return 
-	 */
 	public Cost settlement() {
+		return null;
 	}
 
-	/**
-	 * 
-	 * @return 
-	 */
 	public Cost city() {
+		return null;
 	}
 }

@@ -4,41 +4,17 @@
 
 package Catan;
 
-/************************************************************/
-/**
- * 
- */
 public class Node {
-	/**
-	 * 
-	 */
 	private int nodeID;
-	/**
-	 * 
-	 */
 	private Building occupant;
 
-	/**
-	 * 
-	 */
-	public Building ;
-	/**
-	 * 
-	 * @return 
-	 */
 	public boolean isOccupied() {
+		return false;
 	}
 
-	/**
-	 * 
-	 * @param b 
-	 */
 	public void place(Building b) {
 	}
 
-	/**
-	 * 
-	 */
 	public void clean() {
 	}
 }
