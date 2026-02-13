@@ -4,10 +4,16 @@
 
 package Catan;
 
-public class ResourceCard {
-	public ResourceType type;
+import java.util.Objects;
+
+public final class ResourceCard {
+	private final ResourceType type;
+
+	public ResourceCard(ResourceType type) {
+		this.type = Objects.requireNonNull(type, "type");
+	}
 
 	public ResourceType type() {
-		return null;
+		return type;
 	}
 }

@@ -4,23 +4,30 @@
 
 package Catan;
 
-public class Cost {
-	private int brick;
-	private int lumber;
-	private int wool;
-	private int grain;
-	private int ore;
-	private int desert;
+public final class Cost {
+	public final int brick;
+	public final int lumber;
+	public final int wool;
+	public final int grain;
+	public final int ore;
 
-	public Cost road() {
-		return null;
+	private Cost(int brick, int lumber, int wool, int grain, int ore) {
+		this.brick = brick;
+		this.lumber = lumber;
+		this.wool = wool;
+		this.grain = grain;
+		this.ore = ore;
 	}
 
-	public Cost settlement() {
-		return null;
+	public static Cost road() {
+		return new Cost(1, 1, 0, 0, 0);
 	}
 
-	public Cost city() {
-		return null;
+	public static Cost settlement() {
+		return new Cost(1, 1, 1, 1, 0);
+	}
+
+	public static Cost city() {
+		return new Cost(0, 0, 0, 2, 3);
 	}
 }

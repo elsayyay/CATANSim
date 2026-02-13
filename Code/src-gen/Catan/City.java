@@ -4,8 +4,9 @@
 
 package Catan;
 
-public class City extends Building {
-	public int victoryPoints() {
-		return 0;
+public final class City extends Building {
+	public City(Player owner, Node location) {
+		super(owner, location);
 	}
+
 }
