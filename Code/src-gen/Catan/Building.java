@@ -4,11 +4,26 @@
 
 package Catan;
 
-public class Building {
-	private Player owner;
-	private Node location;
+import java.util.Objects;
 
-	public int victoryPoints() {
-		return 0;
-	}
+public abstract class Building {
+    protected final Player owner;
+    protected final Node location;
+
+    protected Building(Player owner, Node location) {
+        this.owner = Objects.requireNonNull(owner, "owner");
+        this.location = Objects.requireNonNull(location, "location");
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public Node getLocation() {
+        return location;
+    }
+
+    public int victoryPoints(){
+        return 1;
+    };
 }
