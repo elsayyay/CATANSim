@@ -4,16 +4,34 @@
 
 package Catan;
 
-public class Tile {
-	private int tileID;
-	private ResourceType resourceType;
-	private int numberToken;
+public final class Tile {
+	private final int tileId;                 // 0..18
+	private final ResourceType resourceType;  // includes DESERT
+	private final int numberToken;            // 2..12, no 7; desert can be 0
+
+	public Tile(int tileId, ResourceType resourceType, int numberToken) {
+		this.tileId = tileId;
+		this.resourceType = resourceType;
+		this.numberToken = numberToken;
+	}
+
+	public int getTileId() {
+		return tileId;
+	}
+
+	public ResourceType getResourceType() {
+		return resourceType;
+	}
+
+	public int getNumberToken() {
+		return numberToken;
+	}
 
 	public boolean producesOn(int roll) {
-		return false;
+		return resourceType != ResourceType.DESERT && numberToken == roll;
 	}
 
 	public boolean isDesert() {
-		return false;
+		return resourceType == ResourceType.DESERT;
 	}
 }

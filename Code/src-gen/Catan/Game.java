@@ -4,30 +4,120 @@
 
 package Catan;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Game {
-	private int round;
-	private int maxRounds;
-	private Board board;
-	private List<Player> players = new ArrayList<>();
+	private int round = 0;
+	private final int maxRounds;
+	private final Board board;
+	private final List<Player> players;
+	private final Random rng = new Random();
 
-	public int getRound() {
-		return 0;
+	public Game(int maxRounds, Board board, List<Player> players) {
+		if (maxRounds < 1 || maxRounds > 8192) throw new IllegalArgumentException("maxRounds must be in [1, 8192]");
+		if (board == null) throw new IllegalArgumentException("board cannot be null");
+		if (players == null || players.size() != 4) throw new IllegalArgumentException("Game must have exactly 4 players.");
+		this.maxRounds = maxRounds;
+		this.board = board;
+		this.players = List.copyOf(players);
+	}
+
+	public int getRound() { return round; }
+	public Board getBoard() { return board; }
+	public List<Player> getPlayers() { return players; }
+
+	public void run() {
+		board.setupDefaultMap();
+		initializeStartingPositions();
+
+		while (!isFinished()) {
+			playRound();
+			printVpEndOfRound();
+			round++;
+		}
 	}
 
 	public void playRound() {
-	}
+		int roll = roll2d6();
+		System.out.println("== Roll: " + roll + " ==");
+		board.produceResources(roll);
 
-	public void run() {
-	}
-
-	public Player getWinner() {
-		return null;
+		for (Player p : players) {
+			if (isFinished()) break;
+			System.out.println("[" + round + "] / [" + p.getId() + "]: " + p.takeTurn(this));
+		}
 	}
 
 	public boolean isFinished() {
-		return false;
+		return round >= maxRounds || winner() != null;
+	}
+
+	public Player winner() {
+		for (Player p : players) if (p.getVictoryPoints() >= 10) return p;
+		return null;
+	}
+
+	private int roll2d6() {
+		return (1 + rng.nextInt(6)) + (1 + rng.nextInt(6));
+	}
+
+	private void printVpEndOfRound() {
+		StringBuilder sb = new StringBuilder("== End of Round ").append(round).append(" VPs == ");
+		for (Player p : players) sb.append("P").append(p.getId()).append(":").append(p.getVictoryPoints()).append(" ");
+		System.out.println(sb.toString().trim());
+	}
+
+	/**
+	 * Catan start: each player places 2 settlements + 2 roads.
+	 * Placement order is "snake": 1-2-3-4 then 4-3-2-1.
+	 */
+	private void initializeStartingPositions() {
+		for (Player p : players) {
+			Node chosen = null;
+
+			for (Node n : board.getNodes()) {
+				if (board.canPlaceSettlementInitial(p, n)) { chosen = n; break; }
+			}
+
+			//useless, already checked in canPlaceSettlementInitial
+			if (chosen == null) throw new IllegalStateException("No legal initial settlement for P" + p.getId());
+
+			if (!board.placeSettlementInitial(p, chosen)) throw new IllegalStateException("Initial settlement failed for P" + p.getId());
+			System.out.println("[INIT] / [" + p.getId() + "]: PLACE SETTLEMENT at node " + chosen.getNodeId());
+
+			Node roadEnd = null;
+			for (int nbId : BoardTopology.nodeNeighbors.get(chosen.getNodeId())) {
+				Node nb = board.getNode(nbId);
+				if (board.canPlaceRoad(p, chosen, nb)) { roadEnd = nb; break; }
+			}
+			if (roadEnd == null) throw new IllegalStateException("No legal initial road for P" + p.getId());
+
+			if (!board.placeRoad(p, chosen, roadEnd)) throw new IllegalStateException("Initial road failed for P" + p.getId());
+			System.out.println("[INIT] / [" + p.getId() + "]: PLACE ROAD " + chosen.getNodeId() + "-" + roadEnd.getNodeId());
+		}
+
+		for (int i = players.size() - 1; i >= 0; i--) {
+			Player p = players.get(i);
+
+			Node chosen = null;
+			for (Node n : board.getNodes()) {
+				if (board.canPlaceSettlementInitial(p, n)) { chosen = n; break; }
+			}
+			if (chosen == null) throw new IllegalStateException("No legal 2nd initial settlement for P" + p.getId());
+
+			if (!board.placeSettlementInitial(p, chosen)) throw new IllegalStateException("2nd initial settlement failed for P" + p.getId());
+			System.out.println("[INIT] / [" + p.getId() + "]: PLACE SETTLEMENT at node " + chosen.getNodeId());
+
+			Node roadEnd = null;
+			for (int nbId : BoardTopology.nodeNeighbors.get(chosen.getNodeId())) {
+				Node nb = board.getNode(nbId);
+				if (board.canPlaceRoad(p, chosen, nb)) { roadEnd = nb; break; }
+			}
+			if (roadEnd == null) throw new IllegalStateException("No legal 2nd initial road for P" + p.getId());
+
+			if (!board.placeRoad(p, chosen, roadEnd)) throw new IllegalStateException("2nd initial road failed for P" + p.getId());
+			System.out.println("[INIT] / [" + p.getId() + "]: PLACE ROAD " + chosen.getNodeId() + "-" + roadEnd.getNodeId());
+		}
 	}
 }
