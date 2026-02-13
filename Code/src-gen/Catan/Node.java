@@ -4,17 +4,32 @@
 
 package Catan;
 
-public class Node {
-	private int nodeID;
-	private Building occupant;
+public final class Node {
+    private final int nodeId;
+    private Building occupant; // null if empty
 
-	public boolean isOccupied() {
-		return false;
-	}
+    public Node(int nodeId) {
+        this.nodeId = nodeId;
+    }
 
-	public void place(Building b) {
-	}
+    public int getNodeId() {
+        return nodeId;
+    }
 
-	public void clean() {
-	}
+    public boolean isOccupied() {
+        return occupant != null;
+    }
+
+    public Building getOccupant() {
+        return occupant;
+    }
+
+    public void place(Building b) {
+        if (b == null) throw new IllegalArgumentException("building cannot be null");
+        this.occupant = b;
+    }
+
+    public void clear() {
+        this.occupant = null;
+    }
 }

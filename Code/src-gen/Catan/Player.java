@@ -4,30 +4,65 @@
 
 package Catan;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Player {
-	private int id;
-	private int victoryPoints;
-	private List<ResourceCard> hand = new ArrayList<>();
-	private List<Road> roads = new ArrayList<>();
-	private List<Settlement> settlements = new ArrayList<>();
-	private List<City> cities = new ArrayList<>();
+    private final int id;
+    private int victoryPoints = 0;
+    private final List<ResourceCard> hand = new ArrayList<>();
+    private final Random rng = new Random();
 
-	public void takeTurn(Game game) {
-	}
+    public Player(int id) {
+        this.id = id;
+    }
 
-	public void addResources(ResourceType type, int count) {
-	}
+    public int getId() { return id; }
+    public int getVictoryPoints() { return victoryPoints; }
+    public int handSize() { return hand.size(); }
 
-	public boolean hasResources(Cost cost) {
-		return false;
-	}
+    void addVictoryPoints(int points) {
+        victoryPoints += points;
+    }
 
-	public void Pay(Cost cost) {
-	}
+    public void addResources(ResourceType type, int count) {
+        if (count < 0) throw new IllegalArgumentException("count must be >= 0");
+        if (type == ResourceType.DESERT) return;
+        for (int i = 0; i < count; i++) hand.add(new ResourceCard(type));
+    }
 
-	public void updateVictoryPoints() {
-	}
+    public boolean hasResources(Cost cost) {
+        EnumMap<ResourceType, Integer> c = countHand();
+        return c.getOrDefault(ResourceType.BRICK, 0)  >= cost.brick
+                && c.getOrDefault(ResourceType.LUMBER, 0) >= cost.lumber
+                && c.getOrDefault(ResourceType.WOOL, 0)   >= cost.wool
+                && c.getOrDefault(ResourceType.GRAIN, 0)  >= cost.grain
+                && c.getOrDefault(ResourceType.ORE, 0)    >= cost.ore;
+    }
+
+    public void pay(Cost cost) {
+        if (!hasResources(cost)) throw new IllegalStateException("Not enough resources.");
+        removeFromHand(ResourceType.BRICK, cost.brick);
+        removeFromHand(ResourceType.LUMBER, cost.lumber);
+        removeFromHand(ResourceType.WOOL, cost.wool);
+        removeFromHand(ResourceType.GRAIN, cost.grain);
+        removeFromHand(ResourceType.ORE, cost.ore);
+    }
+
+    public void takeTurn(Game game) {
+
+    }
+
+    private EnumMap<ResourceType, Integer> countHand() {
+        EnumMap<ResourceType, Integer> counts = new EnumMap<>(ResourceType.class);
+        for (ResourceCard card : hand) counts.merge(card.type(), 1, Integer::sum);
+        return counts;
+    }
+
+    private void removeFromHand(ResourceType type, int count) {
+        for (int i = 0; i < count; i++) {
+            for (int j = 0; j < hand.size(); j++) {
+                if (hand.get(j).type() == type) { hand.remove(j); break; }
+            }
+        }
+    }
 }

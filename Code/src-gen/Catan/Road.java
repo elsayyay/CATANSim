@@ -4,12 +4,36 @@
 
 package Catan;
 
-public class Road {
-	private Player owner;
-	private Node a;
-	private Node b;
+import java.util.Objects;
 
-	public boolean connects(Node n) {
-		return false;
-	}
+public final class Road {
+    private final Player owner;
+    private final Node a;
+    private final Node b;
+
+    public Road(Player owner, Node a, Node b) {
+        this.owner = Objects.requireNonNull(owner, "owner");
+        this.a = Objects.requireNonNull(a, "a");
+        this.b = Objects.requireNonNull(b, "b");
+        if (a.getNodeId() == b.getNodeId()) {
+            throw new IllegalArgumentException("Road endpoints must be different nodes.");
+        }
+    }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public Node getA() {
+        return a;
+    }
+
+    public Node getB() {
+        return b;
+    }
+
+    public boolean connects(Node n) {
+        int id = Objects.requireNonNull(n, "n").getNodeId();
+        return a.getNodeId() == id || b.getNodeId() == id;
+    }
 }
