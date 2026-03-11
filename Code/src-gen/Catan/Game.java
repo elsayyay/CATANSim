@@ -4,8 +4,7 @@
 
 package Catan;
 
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
 	private int round = 0;
@@ -13,14 +12,29 @@ public class Game {
 	private final Board board;
 	private final List<Player> players;
 	private final Random rng = new Random();
+	private final Scanner scanner;
+	private final boolean hasHumanPlayer;
+	private final GameStateExporter exporter;
 
-	public Game(int maxRounds, Board board, List<Player> players) {
+	public Game(int maxRounds, Board board, List<Player> players, Scanner scanner) {
 		if (maxRounds < 1 || maxRounds > 8192) throw new IllegalArgumentException("maxRounds must be in [1, 8192]");
 		if (board == null) throw new IllegalArgumentException("board cannot be null");
 		if (players == null || players.size() != 4) throw new IllegalArgumentException("Game must have exactly 4 players.");
 		this.maxRounds = maxRounds;
 		this.board = board;
 		this.players = List.copyOf(players);
+		this.scanner = scanner;
+
+		boolean humanFound = false;
+		for (Player p : players) {
+			if (p.isHuman()) { humanFound = true; break; }
+		}
+		this.hasHumanPlayer = humanFound;
+		this.exporter = new GameStateExporter("Code/visualize/state.json");
+	}
+
+	public Game(int maxRounds, Board board, List<Player> players) {
+		this(maxRounds, board, players, null);
 	}
 
 	public int getRound() { return round; }
@@ -30,23 +44,58 @@ public class Game {
 	public void run() {
 		board.setupDefaultMap();
 		initializeStartingPositions();
+		exporter.export(this);
 
 		while (!isFinished()) {
 			playRound();
 			printVpEndOfRound();
 			round++;
 		}
+
+		// Print final results
+		Player w = winner();
+		if (w != null) {
+			System.out.println("Winner: Player " + w.getId() + " with " + w.getVictoryPoints() + " VP!");
+		} else {
+			System.out.println("No winner after " + maxRounds + " rounds.");
+		}
+		exporter.export(this);
 	}
 
 	public void playRound() {
-		int roll = roll2d6();
-		System.out.println("== Roll: " + roll + " ==");
-		board.produceResources(roll);
-
 		for (Player p : players) {
 			if (isFinished()) break;
-			System.out.println("[" + round + "] / [" + p.getId() + "]: " + p.takeTurn(this));
+			playTurn(p);
 		}
+	}
+
+	private void playTurn(Player p) {
+		if (p.isHuman()) {
+			// Human handles their own turn (roll, build, go)
+			String action = p.takeTurn(this);
+			System.out.println("[" + round + "] / [" + p.getId() + "]: " + action);
+		} else {
+			// Step forward: wait for "go" before AI turn (R2.4)
+			if (hasHumanPlayer && scanner != null) {
+				System.out.println("Type 'go' to proceed to Player " + p.getId() + "'s turn...");
+				waitForGo();
+			}
+
+			// AI auto-rolls
+			int roll = rollDice();
+			System.out.println("[" + round + "] / [" + p.getId() + "]: ROLL " + roll);
+
+			if (roll == 7) {
+				handleRobber(p);
+			} else {
+				board.produceResources(roll);
+			}
+
+			// AI actions
+			String action = p.takeTurn(this);
+			System.out.println("[" + round + "] / [" + p.getId() + "]: " + action);
+		}
+		exporter.export(this);
 	}
 
 	public boolean isFinished() {
@@ -58,8 +107,77 @@ public class Game {
 		return null;
 	}
 
-	private int roll2d6() {
+	/**
+	 * Rolls two six-sided dice. Public so HumanPlayer can trigger it.
+	 */
+	public int rollDice() {
 		return (1 + rng.nextInt(6)) + (1 + rng.nextInt(6));
+	}
+
+	/**
+	 * Handles the Robber mechanism when a 7 is rolled (R2.5).
+	 * 1. Players with >7 cards discard half (rounded down).
+	 * 2. Robber moves to a random tile (different from current).
+	 * 3. A random qualifying player (adjacent to new robber tile) gives a random card to the roller.
+	 */
+	public void handleRobber(Player roller) {
+		Robber robber = board.getRobber();
+
+		// 1. Discard half for players with more than 7 cards
+		for (Player p : players) {
+			if (p.handSize() > 7) {
+				int before = p.handSize();
+				p.discardHalfCards(rng);
+				int discarded = before - p.handSize();
+				System.out.println("[" + round + "] / [" + p.getId() + "]: DISCARD " + discarded + " cards (had " + before + ")");
+			}
+		}
+
+		// 2. Move robber to a random tile (not the current one)
+		int current = robber.getTileId();
+		int newTile;
+		do {
+			newTile = rng.nextInt(BoardTopology.TILE_COUNT);
+		} while (newTile == current);
+		robber.moveTo(newTile);
+		System.out.println("[" + round + "] / [" + roller.getId() + "]: ROBBER moved to tile " + newTile);
+
+		// 3. Steal a random card from a qualifying player adjacent to the new robber tile
+		int[] adjNodes = BoardTopology.tileNodes[newTile];
+		Set<Integer> seenPlayerIds = new HashSet<>();
+		List<Player> qualifying = new ArrayList<>();
+		for (int nodeId : adjNodes) {
+			Node n = board.getNode(nodeId);
+			if (n.isOccupied()) {
+				Player owner = n.getOccupant().getOwner();
+				if (owner.getId() != roller.getId() && owner.handSize() > 0
+						&& !seenPlayerIds.contains(owner.getId())) {
+					qualifying.add(owner);
+					seenPlayerIds.add(owner.getId());
+				}
+			}
+		}
+
+		if (!qualifying.isEmpty()) {
+			Player victim = qualifying.get(rng.nextInt(qualifying.size()));
+			ResourceCard stolen = victim.removeRandomCard(rng);
+			if (stolen != null) {
+				roller.addResources(stolen.type(), 1);
+				System.out.println("[" + round + "] / [" + roller.getId() + "]: STEAL " + stolen.type() + " from Player " + victim.getId());
+			}
+		}
+	}
+
+	private void waitForGo() {
+		while (true) {
+			System.out.print("> ");
+			String input = scanner.nextLine().trim();
+			CommandParser.Command cmd = CommandParser.parse(input);
+			if (cmd.type == CommandParser.CommandType.GO) {
+				return;
+			}
+			System.out.println("Type 'go' to proceed.");
+		}
 	}
 
 	private void printVpEndOfRound() {
@@ -80,7 +198,6 @@ public class Game {
 				if (board.canPlaceSettlementInitial(p, n)) { chosen = n; break; }
 			}
 
-			//useless, already checked in canPlaceSettlementInitial
 			if (chosen == null) throw new IllegalStateException("No legal initial settlement for P" + p.getId());
 
 			if (!board.placeSettlementInitial(p, chosen)) throw new IllegalStateException("Initial settlement failed for P" + p.getId());
