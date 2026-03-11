@@ -1,0 +1,22 @@
+{
+  "roads": [
+    { "a": 0, "b": 1, "owner": "RED" },
+    { "a": 2, "b": 1, "owner": "BLUE" },
+    { "a": 4, "b": 3, "owner": "WHITE" },
+    { "a": 6, "b": 1, "owner": "ORANGE" },
+    { "a": 8, "b": 7, "owner": "ORANGE" },
+    { "a": 10, "b": 9, "owner": "WHITE" },
+    { "a": 12, "b": 3, "owner": "BLUE" },
+    { "a": 14, "b": 37, "owner": "RED" }
+  ],
+  "buildings": [
+    { "node": 0, "owner": "RED", "type": "SETTLEMENT" },
+    { "node": 2, "owner": "BLUE", "type": "SETTLEMENT" },
+    { "node": 4, "owner": "WHITE", "type": "SETTLEMENT" },
+    { "node": 6, "owner": "ORANGE", "type": "SETTLEMENT" },
+    { "node": 8, "owner": "ORANGE", "type": "SETTLEMENT" },
+    { "node": 10, "owner": "WHITE", "type": "SETTLEMENT" },
+    { "node": 12, "owner": "BLUE", "type": "SETTLEMENT" },
+    { "node": 14, "owner": "RED", "type": "SETTLEMENT" }
+  ]
+}
