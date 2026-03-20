@@ -24,7 +24,7 @@ public abstract class Player {
     public int getVictoryPoints() { return victoryPoints; }
     public int handSize() { return hand.size(); }
 
-    void addVictoryPoints(int points) {
+    public void addVictoryPoints(int points) {
         victoryPoints += points;
     }
 

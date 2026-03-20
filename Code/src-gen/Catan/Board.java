@@ -183,6 +183,15 @@ public class Board {
         return true;
     }
 
+    public boolean removeRoad(Road road) {
+        return roads.remove(road);
+    }
+
+    public Road getLastPlacedRoad() {
+        if (roads.isEmpty()) return null;
+        return roads.get(roads.size() - 1);
+    }
+
     private boolean nodeHasPlayersBuilding(Player p, Node n) {
         return n.isOccupied() && n.getOccupant().getOwner().getId() == p.getId();
     }

@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class CommandParser {
 
     public enum CommandType {
-        ROLL, GO, LIST, BUILD_SETTLEMENT, BUILD_CITY, BUILD_ROAD, INVALID
+        ROLL, GO, LIST, BUILD_SETTLEMENT, BUILD_CITY, BUILD_ROAD, UNDO, REDO, INVALID
     }
 
     public static class Command {
@@ -40,6 +40,12 @@ public class CommandParser {
 
     private static final Pattern BUILD_ROAD_PATTERN =
             Pattern.compile("^\\s*build\\s+road\\s+(\\d+)\\s*,\\s*(\\d+)\\s*$", Pattern.CASE_INSENSITIVE);
+
+    private static final Pattern UNDO_PATTERN =
+            Pattern.compile("^\\s*undo\\s*$", Pattern.CASE_INSENSITIVE);
+
+    private static final Pattern REDO_PATTERN =
+            Pattern.compile("^\\s*redo\\s*$", Pattern.CASE_INSENSITIVE);
 
     public static Command parse(String input) {
         if (input == null) return new Command(CommandType.INVALID);
@@ -73,6 +79,12 @@ public class CommandParser {
             int to = Integer.parseInt(m.group(2));
             return new Command(CommandType.BUILD_ROAD, from, to);
         }
+
+        m = UNDO_PATTERN.matcher(input);
+        if (m.matches()) return new Command(CommandType.UNDO);
+
+        m = REDO_PATTERN.matcher(input);
+        if (m.matches()) return new Command(CommandType.REDO);
 
         return new Command(CommandType.INVALID);
     }
