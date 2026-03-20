@@ -1,105 +1,72 @@
 package Catan;
 
 import java.util.*;
+import java.util.stream.*;
 
 /**
- * Computer-controlled player that uses a greedy strategy.
- * Prioritizes building settlements, then roads, then cities.
+ * Computer-controlled player that uses the Strategy Pattern for decision-making.
+ *
+ * R3.2: Evaluates all possible actions using strategies, picks the highest value:
+ *   - Earning a VP (settlement/city): 1.0
+ *   - Building without VP (road): 0.8
+ *   - Spending cards to below 5: 0.5
+ *   - Ties: random selection
+ *
+ * R3.3: Checks constraints before value evaluation:
+ *   - >7 cards: must spend
+ *   - Two road segments <= 2 apart: connect them
+ *   - Opponent longest road at most 1 shorter: buy connected road
  */
 public class AIPlayer extends Player {
     private final Random rng = new Random();
+    private final List<AIStrategy> strategies;
+    private final ConstraintChecker constraintChecker;
+    private final CommandHistory commandHistory = new CommandHistory();
 
     public AIPlayer(int id) {
         super(id);
+        this.strategies = List.of(
+            new BuildSettlementStrategy(),
+            new BuildCityStrategy(),
+            new BuildRoadStrategy()
+        );
+        this.constraintChecker = new ConstraintChecker();
     }
 
     @Override
     public String takeTurn(Game game) {
         Board board = game.getBoard();
-        return tryBuildOnce(board);
-    }
 
-    private String tryBuildOnce(Board board) {
-        String action;
-
-        if (hasResources(Cost.settlement()) && !(action = buildSettlement(board)).startsWith("PASS")) {
-            return action;
-        }
-        if (hasResources(Cost.road()) && !(action = buildRoad(board)).startsWith("PASS")) {
-            return action;
-        }
-        if (hasResources(Cost.city()) && !(action = buildCity(board)).startsWith("PASS")) {
-            return action;
-        }
-        return pass();
-    }
-
-    private String buildSettlement(Board board) {
-        List<Node> spots = new ArrayList<>();
-        for (Node n : board.getNodes()) {
-            if (board.canPlaceSettlement(this, n)) {
-                spots.add(n);
-            }
-        }
-        if (spots.isEmpty()) {
-            return pass();
+        // R3.3: Check constraints first — must resolve before value-based actions
+        AIAction mandatory = constraintChecker.checkConstraints(this, board, game);
+        if (mandatory != null) {
+            String result = commandHistory.executeCommand(mandatory.getCommand());
+            return mandatory.getDescription();
         }
 
-        Node at = spots.get(rng.nextInt(spots.size()));
-        pay(Cost.settlement());
-        return board.placeSettlement(this, at)
-                ? "BUILD SETTLEMENT at node " + at.getNodeId()
-                : pass();
-    }
-
-    private String buildCity(Board board) {
-        List<Node> spots = new ArrayList<>();
-        for (Node n : board.getNodes()) {
-            if (board.canUpgradeToCity(this, n)) {
-                spots.add(n);
-            }
-        }
-        if (spots.isEmpty()) {
-            return pass();
+        // R3.2: Evaluate all possible actions using strategies
+        List<AIAction> allActions = new ArrayList<>();
+        for (AIStrategy strategy : strategies) {
+            allActions.addAll(strategy.evaluate(this, board, game));
         }
 
-        Node at = spots.get(rng.nextInt(spots.size()));
-        pay(Cost.city());
-        return board.upgradeToCity(this, at)
-                ? "BUILD CITY at node " + at.getNodeId()
-                : pass();
-    }
-
-    private String buildRoad(Board board) {
-        List<int[]> edges = new ArrayList<>();
-
-        for (Node a : board.getNodes()) {
-            int aId = a.getNodeId();
-            for (int bId : BoardTopology.nodeNeighbors.get(aId)) {
-                if (aId >= bId) {
-                    continue;
-                }
-                Node b = board.getNode(bId);
-                if (board.canPlaceRoad(this, a, b)) {
-                    edges.add(new int[]{aId, bId});
-                }
-            }
-        }
-        if (edges.isEmpty()) {
-            return pass();
+        if (allActions.isEmpty()) {
+            return "PASS";
         }
 
-        int[] e = edges.get(rng.nextInt(edges.size()));
-        Node a = board.getNode(e[0]);
-        Node b = board.getNode(e[1]);
+        // Find maximum value
+        double maxValue = allActions.stream()
+                .mapToDouble(AIAction::getValue)
+                .max()
+                .orElse(0);
 
-        pay(Cost.road());
-        return board.placeRoad(this, a, b)
-                ? "BUILD ROAD " + a.getNodeId() + "-" + b.getNodeId()
-                : pass();
-    }
+        // Filter to actions with max value, pick random for tie-breaking
+        List<AIAction> best = allActions.stream()
+                .filter(a -> a.getValue() == maxValue)
+                .collect(Collectors.toList());
 
-    private String pass() {
-        return "PASS";
+        AIAction chosen = best.get(rng.nextInt(best.size()));
+        commandHistory.executeCommand(chosen.getCommand());
+        return chosen.getDescription();
     }
 }

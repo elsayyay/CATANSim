@@ -4,10 +4,11 @@ import java.util.*;
 
 /**
  * Human-controlled player that reads commands from the command line.
- * Supports: roll, list, build settlement/city/road, go.
+ * Supports: roll, list, build settlement/city/road, undo, redo, go.
  */
 public class HumanPlayer extends Player {
     private final Scanner scanner;
+    private final CommandHistory commandHistory = new CommandHistory();
 
     public HumanPlayer(int id, Scanner scanner) {
         super(id);
@@ -24,9 +25,10 @@ public class HumanPlayer extends Player {
         Board board = game.getBoard();
         int round = game.getRound();
         boolean hasRolled = false;
+        commandHistory.clear();
 
         System.out.println("=== Player " + getId() + "'s turn (Human) ===");
-        System.out.println("Commands: roll, list, build settlement <nodeId>, build city <nodeId>, build road <from>,<to>, go");
+        System.out.println("Commands: roll, list, build settlement <nodeId>, build city <nodeId>, build road <from>,<to>, undo, redo, go");
 
         while (true) {
             System.out.print("> ");
@@ -68,6 +70,24 @@ public class HumanPlayer extends Player {
                     handleBuildRoad(board, round, cmd.args[0], cmd.args[1]);
                     break;
 
+                case UNDO:
+                    if (!commandHistory.canUndo()) {
+                        System.out.println("Nothing to undo.");
+                    } else {
+                        commandHistory.undo();
+                        System.out.println("Action undone.");
+                    }
+                    break;
+
+                case REDO:
+                    if (!commandHistory.canRedo()) {
+                        System.out.println("Nothing to redo.");
+                    } else {
+                        commandHistory.redo();
+                        System.out.println("Action redone.");
+                    }
+                    break;
+
                 case GO:
                     if (!hasRolled) {
                         System.out.println("Must roll first.");
@@ -76,7 +96,7 @@ public class HumanPlayer extends Player {
                     return "END TURN";
 
                 case INVALID:
-                    System.out.println("Invalid command. Try: roll, list, build settlement <n>, build city <n>, build road <n>,<n>, go");
+                    System.out.println("Invalid command. Try: roll, list, build settlement <n>, build city <n>, build road <n>,<n>, undo, redo, go");
                     break;
             }
         }
@@ -105,9 +125,9 @@ public class HumanPlayer extends Player {
             System.out.println("Cannot place settlement at node " + nodeId + ".");
             return;
         }
-        pay(Cost.settlement());
-        board.placeSettlement(this, at);
-        System.out.println("[" + round + "] / [" + getId() + "]: BUILD SETTLEMENT at node " + nodeId);
+        GameCommand cmd = new BuildSettlementCommand(this, board, at);
+        String result = commandHistory.executeCommand(cmd);
+        System.out.println("[" + round + "] / [" + getId() + "]: " + result);
     }
 
     private void handleBuildCity(Board board, int round, int nodeId) {
@@ -124,9 +144,9 @@ public class HumanPlayer extends Player {
             System.out.println("Cannot upgrade to city at node " + nodeId + ".");
             return;
         }
-        pay(Cost.city());
-        board.upgradeToCity(this, at);
-        System.out.println("[" + round + "] / [" + getId() + "]: BUILD CITY at node " + nodeId);
+        GameCommand cmd = new BuildCityCommand(this, board, at);
+        String result = commandHistory.executeCommand(cmd);
+        System.out.println("[" + round + "] / [" + getId() + "]: " + result);
     }
 
     private void handleBuildRoad(Board board, int round, int fromId, int toId) {
@@ -145,8 +165,8 @@ public class HumanPlayer extends Player {
             System.out.println("Cannot place road from " + fromId + " to " + toId + ".");
             return;
         }
-        pay(Cost.road());
-        board.placeRoad(this, a, b);
-        System.out.println("[" + round + "] / [" + getId() + "]: BUILD ROAD " + fromId + "-" + toId);
+        GameCommand cmd = new BuildRoadCommand(this, board, a, b);
+        String result = commandHistory.executeCommand(cmd);
+        System.out.println("[" + round + "] / [" + getId() + "]: " + result);
     }
 }
